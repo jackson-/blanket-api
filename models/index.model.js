@@ -1,5 +1,6 @@
 const metaModels = {
     Restaurant: require('./restaurant.model'),
+    Rating: require('./rating.model'),
   };
   
   const { mapValues } = require('lodash');

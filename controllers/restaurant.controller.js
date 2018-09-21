@@ -1,19 +1,31 @@
 const axios = require('axios');
 const db = require('../sequelize');
 
-const { Restaurant } = db;
+const { Restaurant, Rating } = db;
 
 
 const restaurantController = {
 
     create: async (req, res, next) => {
-        const {name, description, rating, location} = req.body;
+        const {name, description, rating, lat, lng} = req.body;
         const results = await Restaurant.create({
             name,
             description,
-            location:{type: 'Point', coordinates: [parseFloat(location.lat),parseFloat(location.lng)]}
+            rating,
+            location:{type: 'Point', coordinates: [parseFloat(lat),parseFloat(lng)]}
         })
         return res.json(200, results)
+    },
+
+    rate: async (req, res, next) => {
+        const {restaurantId, vote, score, review} = req.body;
+
+        await Rating.create({
+            score,
+            review,
+            restaurantId,
+        })
+        return res.status(200)
     },
 
     search: async (req, res, next) => {

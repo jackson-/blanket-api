@@ -4,11 +4,12 @@ const force = process.env.NODE_ENV === "DEV" ? true : false
 const logging = parseInt(process.env.LOGGING) ? true : false
 
 const sequelize = new Sequelize(
-    null,
-    null,
+    process.env.DB_NAME,
+    process.env.DB_USER,
     process.env.DB_PWD || null, {
         host: process.env.DB_HOST,
-        dialect: 'sqlite',
+        port:5432,
+        dialect: 'postgres',
         pool: {
             max: 10,
             min: 0,
@@ -16,7 +17,7 @@ const sequelize = new Sequelize(
             idle: 10000
         },
         logging,
-        storage: './database.sqlite'
+        // storage: './database.sqlite'
     })
 
 const models = require("./models/index.model")(sequelize);

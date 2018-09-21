@@ -6,6 +6,10 @@ router
   .post(restaurantCtrl.create)
 
 router
+  .route('/rate')
+  .post(restaurantCtrl.rate)
+
+router
   .route('/:id')
   // GET a single brand by id
 
