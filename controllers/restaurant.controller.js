@@ -1,5 +1,5 @@
 const axios = require('axios');
-const db = require('../sequelize');
+const {sequelize, db} = require('../sequelize');
 
 const { Restaurant, Rating } = db;
 
@@ -17,7 +17,9 @@ const restaurantController = {
             name,
             description,
             rating,
-            location:{type: 'Point', coordinates: [parseFloat(lat),parseFloat(lng)]}
+            lat: parseFloat(lat),
+            lng: parseFloat(lng),
+            // location:{type: 'Point', coordinates: [parseFloat(lat),parseFloat(lng)]}
         })
         return res.json(200, results)
     },
@@ -34,10 +36,13 @@ const restaurantController = {
     },
 
     search: async (req, res, next) => {
-        console.log({...req.query})
-        const results = await Restaurant.findAll({where: {...req.query}})
-        // var lat = parseFloat(req.body.lat);
-        // var lng = parseFloat(req.body.lng);
+        const results = await sequelize.query(
+            `select *
+            from restaurants r
+            where  earth_distance(ll_to_earth(r.lat, r.lng), ll_to_earth(${req.query.lat}, ${req.query.lng})) < 1000000.0; -- in meters
+            `)
+        // var lat = parseFloat(req.query.lat);
+        // var lng = parseFloat(req.query.lng);
         // var attributes = Object.keys(Restaurant.attributes);
         // var location = sequelize.literal(`ST_GeomFromText('POINT(${lng} ${lat})')`);
         // var distance = sequelize.fn('ST_Distance_Sphere', sequelize.literal('location'), location);
@@ -45,7 +50,7 @@ const restaurantController = {
         // const results = await Restaurant.findAll({
         //     attributes: attributes,
         //     order: 'distance',
-        //     where: sequelize.where(distance, {$lte: 10000}),
+        //     where: [sequelize.where(distance, {$lte: 10000})],
         //     logging: console.log
         //   })
         return res.json(200, results);

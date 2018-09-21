@@ -5,7 +5,8 @@ module.exports = sequelize =>
     name: STRING,
     description: STRING,
     rating: FLOAT,
-    location: GEOMETRY,
+    lat: FLOAT,
+    lng: FLOAT,
   });
 
 module.exports.associations = (Restaurant, {  }) => {

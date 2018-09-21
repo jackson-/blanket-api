@@ -4,7 +4,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 // This needs to be imported to run the DB
-const db = require('./sequelize')
+const {db} = require('./sequelize')
 
 const app = express()
 app.use(bodyParser.json())

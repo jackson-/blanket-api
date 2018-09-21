@@ -26,5 +26,8 @@ sequelize.sync({ force })
     .then(() => {
         console.log(`Database & tables created!`)
     })
-
-module.exports = models
+module.exports.default = models
+module.exports = {
+    db: models,
+    sequelize
+}
