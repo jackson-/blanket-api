@@ -6,6 +6,11 @@ const { Restaurant, Rating } = db;
 
 const restaurantController = {
 
+    getAll: async (req, res, next) => {
+        const results = await Restaurant.findAll()
+        return res.json(200, results)
+    },
+
     create: async (req, res, next) => {
         const {name, description, rating, lat, lng} = req.body;
         const results = await Restaurant.create({
@@ -19,28 +24,30 @@ const restaurantController = {
 
     rate: async (req, res, next) => {
         const {restaurantId, vote, score, review} = req.body;
-
-        await Rating.create({
+        console.log(restaurantId, score, review)
+        const rating = await Rating.create({
             score,
             review,
             restaurantId,
         })
-        return res.status(200)
+        return res.json(200, rating)
     },
 
     search: async (req, res, next) => {
-        var lat = parseFloat(req.body.lat);
-        var lng = parseFloat(req.body.lng);
-        var attributes = Object.keys(Restaurant.attributes);
-        var location = sequelize.literal(`ST_GeomFromText('POINT(${lng} ${lat})')`);
-        var distance = sequelize.fn('ST_Distance_Sphere', sequelize.literal('location'), location);
-        attributes.push([distance, 'distance']);
-        const results = await Restaurant.findAll({
-            attributes: attributes,
-            order: 'distance',
-            where: sequelize.where(distance, {$lte: 10000}),
-            logging: console.log
-          })
+        console.log({...req.query})
+        const results = await Restaurant.findAll({where: {...req.query}})
+        // var lat = parseFloat(req.body.lat);
+        // var lng = parseFloat(req.body.lng);
+        // var attributes = Object.keys(Restaurant.attributes);
+        // var location = sequelize.literal(`ST_GeomFromText('POINT(${lng} ${lat})')`);
+        // var distance = sequelize.fn('ST_Distance_Sphere', sequelize.literal('location'), location);
+        // attributes.push([distance, 'distance']);
+        // const results = await Restaurant.findAll({
+        //     attributes: attributes,
+        //     order: 'distance',
+        //     where: sequelize.where(distance, {$lte: 10000}),
+        //     logging: console.log
+        //   })
         return res.json(200, results);
     },
 

@@ -3,6 +3,7 @@ const restaurantCtrl = require('../controllers/restaurant.controller');
 
 router
   .route('/')
+  .get(restaurantCtrl.getAll)
   .post(restaurantCtrl.create)
 
 router
@@ -10,7 +11,7 @@ router
   .post(restaurantCtrl.rate)
 
 router
-  .route('/:id')
-  // GET a single brand by id
+  .route('/search')
+  .get(restaurantCtrl.search)
 
 module.exports = router;
