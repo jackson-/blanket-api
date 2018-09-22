@@ -57,7 +57,6 @@ const restaurantController = {
         } else {
             distance = 1609.34
         }
-        console.log("DISTANCE", distance)
         const results = await sequelize.query(
             `select *
             from restaurants r
