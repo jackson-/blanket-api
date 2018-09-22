@@ -5,10 +5,10 @@ const logging = parseInt(process.env.LOGGING) ? true : false
 
 const sequelize = new Sequelize(
     process.env.DB_NAME,
-    process.env.DB_USER,
+    process.env.DB_USER || "postgres",
     process.env.DB_PWD || null, {
-        host: process.env.DB_HOST,
-        port:5432,
+        host: process.env.DB_HOST || "localhost",
+        port: process.env.DB_PORT || 5432,
         dialect: 'postgres',
         pool: {
             max: 10,
