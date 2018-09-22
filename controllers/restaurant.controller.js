@@ -11,6 +11,11 @@ const restaurantController = {
         return res.json(200, results)
     },
 
+    getById: async (req, res, next) => {
+        const results = await Restaurant.findById(req.params.id, {include:[Rating]})
+        return res.json(200, results)
+    },
+
     create: async (req, res, next) => {
         const { name, description, rating, lat, lng } = req.body;
         const results = await Restaurant.create({
@@ -19,13 +24,12 @@ const restaurantController = {
             rating,
             lat: parseFloat(lat),
             lng: parseFloat(lng),
-            // location:{type: 'Point', coordinates: [parseFloat(lat),parseFloat(lng)]}
         })
         return res.json(200, results)
     },
 
     rate: async (req, res, next) => {
-        const { restaurantId, vote, score, review } = req.body;
+        const { restaurantId, score, review } = req.body;
         const rating = await Rating.create({
             score,
             review,
@@ -54,21 +58,5 @@ const restaurantController = {
 
 
 }
-
-var rad = function (x) {
-    return x * Math.PI / 180;
-};
-
-var getDistance = function (p1lat, p1lng, p2lat, p2lng) {
-    var R = 6378137; // Earth’s mean radius in meter
-    var dLat = rad(p2lat - p1lat);
-    var dLong = rad(p2lng - p1lng);
-    var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-        Math.cos(rad(p1lat)) * Math.cos(rad(p2lat)) *
-        Math.sin(dLong / 2) * Math.sin(dLong / 2);
-    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    var d = R * c;
-    return d; // returns the distance in meter
-};
 
 module.exports = restaurantController;

@@ -14,4 +14,8 @@ router
   .route('/search')
   .get(restaurantCtrl.search)
 
+router
+  .route('/view/:id')
+  .post(restaurantCtrl.rate)
+
 module.exports = router;
