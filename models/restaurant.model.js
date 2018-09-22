@@ -4,10 +4,10 @@ module.exports = sequelize =>
   sequelize.define('restaurant', {
     name: STRING,
     description: STRING,
-    rating: FLOAT,
     lat: FLOAT,
     lng: FLOAT,
   });
 
-module.exports.associations = (Restaurant, {  }) => {
+module.exports.associations = (Restaurant, { Rating }) => {
+  Restaurant.hasMany(Rating);
 };

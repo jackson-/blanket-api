@@ -16,6 +16,6 @@ router
 
 router
   .route('/view/:id')
-  .post(restaurantCtrl.rate)
+  .get(restaurantCtrl.getById)
 
 module.exports = router;
