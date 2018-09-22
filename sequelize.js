@@ -17,7 +17,6 @@ const sequelize = new Sequelize(
             idle: 10000
         },
         logging,
-        // storage: './database.sqlite'
     })
 
 const models = require("./models/index.model")(sequelize);
