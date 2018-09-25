@@ -27,6 +27,11 @@ GEOCODE_KEY=<YOUR API CODE HERE>
 Also, make sure that  your postgres database is running
 
 *Step 4*  
+Go into your postgres command line and install the eathdistance extension
+for the blanket-api database.
+`CREATE EXTENSION cubed; CREATE EXTENSION earthdistance;`
+
+*Step 5*  
 Run the app and start making requests!
 `npm run dev` or `yarn dev`
 
