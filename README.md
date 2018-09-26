@@ -48,8 +48,8 @@ If you do a GET request to `<base-url>/api/restaurants` you should see a listing
 If you do a GET request to `<base-url>/api/restaurants/view/:id` you should see a restaurant object with a property called ratings
 
 ### Search restaurants by location
-You can search by address or latitude and longitude coordinates for restaurants in your area. Do a request to `<base-url>/api/restaurants/search`. This endpoint will parse the query params in the URL for an `address` property and convert that into coordinates or take the `lat` and `lng` properties you already provided.
-The `distance` property determines the radius (miles) to search within.
+You can search by address or latitude and longitude coordinates for restaurants in your area. Do a request to `<base-url>/api/restaurants/search`. This endpoint will parse the query params in the URL for an `address` property and convert that into coordinates or take the `lat` and `lng` properties you already provided. Please
+do not put any commas in your `address`. The `distance` property determines the radius (miles) to search within.
 
 ### Create a restaurant
 To create a restaurant do a POST request to
