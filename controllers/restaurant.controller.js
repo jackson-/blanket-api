@@ -45,7 +45,7 @@ const restaurantController = {
         let { lng, lat, distance } = req.query
 
         if (req.query.address) {
-            let result = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${req.query.address}&key=${process.env.GEOCODE_KEY}`)
+            let result = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${req.query.address.replace(",", "")}&key=${process.env.GEOCODE_KEY}`)
             if (result.data.results.length > 0) {
                 let = { lat, lng } = result.data.results[0].geometry.location;
             } else {
